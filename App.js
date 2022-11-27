@@ -12,20 +12,20 @@ import {
 
 export default function App() {
   //function to get current text input
-function currentText(textTyped){
-setCurrentText(textTyped)
-}
+  function currentText(textTyped) {
+    setCurrentText(textTyped);
+  }
 
   //function to add current text to list
- function taskList(){
-listHandler((finalList) => [...list, text])
- }
+  function taskList() {
+    listHandler((finalList) => [...list, text]);
+  }
 
   //state var for current input text
-  const [text, setCurrentText] = useState("")
+  const [text, setCurrentText] = useState("");
 
   //state variable for updated task list to be displayed
-  const [list, listHandler] = useState([])
+  const [list, listHandler] = useState([]);
 
   return (
     <View style={styles.container}>
@@ -44,7 +44,16 @@ listHandler((finalList) => [...list, text])
         </View>
       </View>
       <View style={styles.displaySection}>
-        {list.map((task) => <Text key={task}>{task}</Text>)}
+        <View style={styles.displayText}>
+          {list.map((task) => (
+            <Text
+              key={task}
+              style={[styles.displayEachText, styles.changeColorWhite]}
+            >
+              {task}
+            </Text>
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -62,7 +71,6 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   headingLogo: {
-    color: "#EB6440",
     justifyContent: "center",
     alignItems: "center",
     height: 60,
@@ -76,7 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 14,
     paddingVertical: 2,
-    backgroundColor: "#00005C",
+    backgroundColor: "#497174",
     flexDirection: "row",
     alignItems: "center",
     flex: 2,
@@ -86,9 +94,27 @@ const styles = StyleSheet.create({
   },
   displaySection: {
     flex: 5,
-    backgroundColor: "#FFE9B1",
-    alignItems: "flex-start",
+    backgroundColor: "#D6E4E5",
+    alignItems: "center",
     padding: 8,
+  },
+  displayText: {
+    padding: 6,
+    margin: 5,
+
+    width: "100%",
+    color: "#fff",
+  },
+  displayEachText: {
+    backgroundColor: "#497174",
+
+    borderRadius: 6,
+    padding: 6,
+    margin: 5,
+    borderBottomWidth: 2,
+    borderColor: "#EB6440",
+    width: "95%",
+    color: "#fff",
   },
   textInput: {
     width: "80%",

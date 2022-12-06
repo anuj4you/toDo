@@ -3,6 +3,7 @@ import { startTransition, useState } from "react";
 import {
   AppState,
   Button,
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
@@ -18,11 +19,14 @@ export default function App() {
 
   //function to add current text to list
   function taskList() {
-    listHandler((finalList) => [...list, text]);
+    listHandler((list) => [
+      ...list,
+      { text: enteredText, key: Math.random().toString() },
+    ]);
   }
 
   //state var for current input text
-  const [text, setCurrentText] = useState("");
+  const [enteredText, setCurrentText] = useState("");
 
   //state variable for updated task list to be displayed
   const [list, listHandler] = useState([]);
@@ -44,16 +48,16 @@ export default function App() {
         </View>
       </View>
       <View style={styles.displaySection}>
-        <View style={styles.displayText}>
-          {list.map((task) => (
-            <Text
-              key={task}
-              style={[styles.displayEachText, styles.changeColorWhite]}
-            >
-              {task}
-            </Text>
-          ))}
-        </View>
+        <FlatList
+          data={list}
+          renderItem={(goalsList) => {
+            return (
+              <View style={styles.displayText}>
+                <Text style={[styles.displayEachText, styles.changeColorWhite]}>{goalsList.item.text}</Text>
+              </View>
+            );
+          }}
+        />
       </View>
     </View>
   );
@@ -95,31 +99,28 @@ const styles = StyleSheet.create({
   displaySection: {
     flex: 5,
     backgroundColor: "#D6E4E5",
-    alignItems: "center",
-    padding: 8,
+    padding: 4,
   },
   displayText: {
     padding: 6,
-    margin: 5,
-
+    margin: 3,
     width: "100%",
     color: "#fff",
   },
   displayEachText: {
     backgroundColor: "#497174",
-
     borderRadius: 6,
     padding: 6,
-    margin: 5,
+    margin: 0,
     borderBottomWidth: 2,
     borderColor: "#EB6440",
-    width: "95%",
+    width: "97%",
     color: "#fff",
   },
   textInput: {
     width: "80%",
     color: "#fff",
-    fontSize:20,
+    fontSize: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#fff",
     padding: 10,
@@ -128,6 +129,6 @@ const styles = StyleSheet.create({
   changeColorWhite: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize:20
+    fontSize: 20,
   },
 });

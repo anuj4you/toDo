@@ -4,6 +4,7 @@ import {
   AppState,
   Button,
   FlatList,
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -12,6 +13,16 @@ import {
 } from "react-native";
 
 export default function App() {
+  
+  
+    //state var for current input text
+    const [enteredText, setCurrentText] = useState("");
+
+    //state variable for updated task list to be displayed
+    const [list, listHandler] = useState([]);
+  
+  
+  
   //function to get current text input
   function currentText(textTyped) {
     setCurrentText(textTyped);
@@ -25,11 +36,13 @@ export default function App() {
     ]);
   }
 
-  //state var for current input text
-  const [enteredText, setCurrentText] = useState("");
+  //function to delete selected task
+  function onDeleteHandler(key) {
+    listHandler((list) => {
+      return list.filter((goal) => goal.key !== key);
+    });
+  }
 
-  //state variable for updated task list to be displayed
-  const [list, listHandler] = useState([]);
 
   return (
     <View style={styles.container}>
@@ -52,9 +65,15 @@ export default function App() {
           data={list}
           renderItem={(goalsList) => {
             return (
-              <View style={styles.displayText}>
-                <Text style={[styles.displayEachText, styles.changeColorWhite]}>{goalsList.item.text}</Text>
-              </View>
+              <Pressable onPress={onDeleteHandler.bind(this, goalsList.item.key)}>
+                <View style={styles.displayText}>
+                  <Text
+                    style={[styles.displayEachText, styles.changeColorWhite]}
+                  >
+                    {goalsList.item.text}
+                  </Text>
+                </View>
+              </Pressable>
             );
           }}
         />

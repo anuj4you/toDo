@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   textInput: {
     width: "80%",
     color: "#fff",
+    fontSize:20,
     borderBottomWidth: 1,
     borderBottomColor: "#fff",
     padding: 10,
@@ -127,5 +128,6 @@ const styles = StyleSheet.create({
   changeColorWhite: {
     color: "#fff",
     fontWeight: "bold",
+    fontSize:20
   },
 });

@@ -1,40 +1,34 @@
 import { StatusBar } from "expo-status-bar";
 import { startTransition, useState } from "react";
 import {
-  AppState,
   Button,
   FlatList,
   Pressable,
   StyleSheet,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
 
 export default function App() {
-  
-  
-    //state var for current input text
-    const [enteredText, setCurrentText] = useState("");
+  //state var for current input text
+  const [enteredText, setCurrentText] = useState("");
 
-    //state variable for updated task list to be displayed
-    const [list, listHandler] = useState([]);
-  
-  
-  
+  //state variable for updated task list to be displayed
+  const [list, listHandler] = useState([]);
+
   //function to get current text input
-  function currentText(textTyped) {
-    setCurrentText(textTyped);
-  }
-
+  const currentText = (val) => {
+    setCurrentText(val);
+  };
   //function to add current text to list
-  function taskList() {
+  const taskList = () => {
     listHandler((list) => [
       ...list,
       { text: enteredText, key: Math.random().toString() },
     ]);
-  }
+    setCurrentText("");
+  };
 
   //function to delete selected task
   function onDeleteHandler(key) {
@@ -42,7 +36,6 @@ export default function App() {
       return list.filter((goal) => goal.key !== key);
     });
   }
-
 
   return (
     <View style={styles.container}>
@@ -56,6 +49,7 @@ export default function App() {
             placeholderTextColor={"#fff"}
             style={styles.textInput}
             onChangeText={currentText}
+            value={enteredText}
           ></TextInput>
           <Button color="#EB6440" title="ADD" onPress={taskList}></Button>
         </View>
@@ -65,7 +59,9 @@ export default function App() {
           data={list}
           renderItem={(goalsList) => {
             return (
-              <Pressable onPress={onDeleteHandler.bind(this, goalsList.item.key)}>
+              <Pressable
+                onPress={onDeleteHandler.bind(this, goalsList.item.key)}
+              >
                 <View style={styles.displayText}>
                   <Text
                     style={[styles.displayEachText, styles.changeColorWhite]}
